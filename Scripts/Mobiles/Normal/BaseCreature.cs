@@ -30,6 +30,7 @@ using Server.Spells.Sixth;
 using Server.Spells.Spellweaving;
 using Server.Targeting;
 using System.Linq;
+using Server.Spells.SkillMasteries;
 #endregion
 
 namespace Server.Mobiles
@@ -1019,14 +1020,14 @@ namespace Server.Mobiles
                 return false;
             }
 
-            if (!(m is BaseCreature) || m is MilitiaFighter)
-            {
-                return true;
-            }
-
             if (TransformationSpellHelper.UnderTransformation(m, typeof(EtherealVoyageSpell)))
             {
                 return false;
+            }
+
+            if (!(m is BaseCreature) || m is MilitiaFighter)
+            {
+                return true;
             }
 
             BaseCreature c = (BaseCreature)m;
@@ -1172,6 +1173,16 @@ namespace Server.Mobiles
             chance += (int)XmlMobFactions.GetScaledFaction(m, this, -250, 250, 0.001);
 
             return ((double)chance / 1000);
+        }
+
+        public virtual bool CanTransfer(Mobile m)
+        {
+            return true;
+        }
+
+        public virtual bool CanFriend(Mobile m)
+        {
+            return true;
         }
 
         private static readonly Type[] m_AnimateDeadTypes = new[]
@@ -1579,6 +1590,13 @@ namespace Server.Mobiles
             {
                 LevelItemManager.CheckItems(from, this);
             }
+            #endregion
+
+            #region Skill Mastery
+            SkillMasterySpell spell = SkillMasterySpell.GetHarmfulSpell(this, typeof(TribulationSpell));
+
+            if (spell != null)
+                spell.DoDamage(this, amount);
             #endregion
 
             base.OnDamage(amount, from, willKill);
@@ -2697,6 +2715,9 @@ namespace Server.Mobiles
                     break;
                 case AIType.AI_Paladin:
                     m_AI = new PaladinAI(this);
+                    break;
+                case AIType.AI_Spellbinder:
+                    m_AI = new SpellbinderAI(this);
                     break;
             }
         }
@@ -6117,7 +6138,7 @@ namespace Server.Mobiles
                         list.Add(m);
                     }
                 }
-                else if (m.Player)
+                else if (m.Player && m.AccessLevel == AccessLevel.Player)
                 {
                     list.Add(m);
                 }

@@ -300,6 +300,7 @@
     <Compile Include="Gumps\BaseImageTileButtonsGump.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Gumps\BaseRewardGump.cs" />
     <Compile Include="Gumps\BasicInfoGump.cs" />
     <Compile Include="Gumps\CategorizedAddGump.cs">
       <SubType>Code</SubType>
@@ -625,6 +626,8 @@
     <Compile Include="Items\Containers\BaseTrash.cs" />
     <Compile Include="Items\Containers\MeagerImbuingBag.cs" />
     <Compile Include="Items\Containers\ScrollBox2.cs" />
+    <Compile Include="Items\Containers\CleanupTrashBarrel.cs" />
+    <Compile Include="Items\Containers\TownTrashBarrel.cs" />
     <Compile Include="Items\Decorative\AcidWall.cs" />
     <Compile Include="Items\Decorative\AcidWall1.cs" />
     <Compile Include="Items\Decorative\BasePaintedMask.cs" />
@@ -649,6 +652,7 @@
     <Compile Include="Items\Equipment\Armor\GargishClothArmor.cs" />
     <Compile Include="Items\Equipment\Instruments\SnakeCharmerFlute.cs" />
     <Compile Include="Items\Equipment\Light\TwilightLantern.cs" />
+    <Compile Include="Items\Equipment\Spellbooks\BookOfMasteries.cs" />
     <Compile Include="Items\Equipment\Weapons\BaseAxe.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -694,6 +698,7 @@
     <Compile Include="Items\Internal\BlightedGroveTeleporters.cs" />
     <Compile Include="Items\Internal\BlueNinjaQuestTeleporter.cs" />
     <Compile Include="Items\Internal\GreenNinjaQuestTeleporter.cs" />
+    <Compile Include="Items\Internal\ItemInterfaces.cs" />
     <Compile Include="Items\Internal\PrismOfLightTeleporters.cs" />
     <Compile Include="Items\Internal\UnderworldTele.cs" />
     <Compile Include="Items\Internal\WhiteNinjaQuestTeleporter.cs" />
@@ -752,6 +757,13 @@
     </Compile>
     <Compile Include="Items\Resource\Fur.cs" />
     <Compile Include="Items\Resource\HotGoo.cs" />
+    <Compile Include="Items\Artifacts\Talismans\FrostguardTalisman.cs" />
+    <Compile Include="Items\Artifacts\Talismans\JadeSnakeHead.cs" />
+    <Compile Include="Items\Artifacts\Equipment\Jewelry\PetrifiedMatriarchsTongue.cs" />
+    <Compile Include="Items\Artifacts\Equipment\Clothing\RangersCloakOfAugmentation.cs" />
+    <Compile Include="Items\Artifacts\Equipment\Clothing\ShadowCloakOfRejuvenation.cs" />
+    <Compile Include="Items\Artifacts\Equipment\Armor\WardedDemonboneBracers.cs" />
+    <Compile Include="Items\Artifacts\Equipment\Clothing\WardensArmorOfAugmentation.cs" />
     <Compile Include="Items\Tools\BaseHarvestTool.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -855,6 +867,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Items\Tools\ChestOfSending.cs" />
+    <Compile Include="Items\Tools\ForgedMetalOfArtifacts.cs" />
     <Compile Include="Misc\Extensions.cs" />
     <Compile Include="Items\Artifacts\Equipment\Glasses\Glasses.cs">
       <SubType>Code</SubType>
@@ -2425,6 +2438,9 @@
     <Compile Include="Quests\AmbitiousSolenQueen\AmbitiousQueenQuest.cs" />
     <Compile Include="Quests\AmbitiousSolenQueen\Conversations.cs" />
     <Compile Include="Quests\AmbitiousSolenQueen\Objectives.cs" />
+    <Compile Include="Quests\Bard Mastery Quests\SirBerran.cs" />
+    <Compile Include="Quests\Bard Mastery Quests\SirFelean.cs" />
+    <Compile Include="Quests\Bard Mastery Quests\SirHareus.cs" />
     <Compile Include="Quests\Bedlam.cs" />
     <Compile Include="Quests\BlightedGrove.cs" />
     <Compile Include="Quests\CloakOfHumility\CloakOfHumilityQuest.cs" />
@@ -2462,6 +2478,7 @@
     <Compile Include="Quests\Sacred Quest\ShrineOfSingularity.cs" />
     <Compile Include="Quests\Spellweaving.cs" />
     <Compile Include="Quests\SummonFey.cs" />
+    <Compile Include="Quests\SummonFiend.cs" />
     <Compile Include="Quests\TheAncientWorld.cs" />
     <Compile Include="Mobiles\NPCs\Aurvidlem.cs" />
     <Compile Include="Items\Containers\ScrollBox.cs" />
@@ -2713,6 +2730,7 @@
     <Compile Include="Services\Armor Refinement\Gumps.cs" />
     <Compile Include="Services\Armor Refinement\Items.cs" />
     <Compile Include="Services\BasketWeaving\Baskets\BasketCraftable.cs" />
+    <Compile Include="Services\BulkOrders\Items\MasterCraftsmanTalisman.cs" />
     <Compile Include="Services\City Loyalty System\CityDefinition.cs" />
     <Compile Include="Services\City Loyalty System\CityLoyaltyEntry.cs" />
     <Compile Include="Services\City Loyalty System\CityLoyaltySystem.cs" />
@@ -2744,6 +2762,7 @@
     <Compile Include="Services\CleanUpBritannia\CleanUpBritanniaRewards.cs" />
     <Compile Include="Services\CleanUpBritannia\Creatures\TheCleanupOfficer.cs" />
     <Compile Include="Services\CleanUpBritannia\Gumps.cs" />
+    <Compile Include="Services\CleanUpBritannia\Items\RefinementAmalgamator.cs" />
     <Compile Include="Services\CleanUpBritannia\Items\VollemHeldInCrystal.cs" />
     <Compile Include="Services\CleanUpBritannia\Items\Beehive.cs" />
     <Compile Include="Services\CleanUpBritannia\Items\BootsOfTheCrystalHydra.cs" />
@@ -7173,7 +7192,7 @@
     <Compile Include="Items\Equipment\Suits\LordBritishSuit.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Items\Equipment\Talismans\ConjurersTrinket.cs" />
+    <Compile Include="Items\Artifacts\Talismans\ConjurersTrinket.cs" />
     <Compile Include="Items\Resource\EnchantedSwitch.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -9394,8 +9413,14 @@
     <Compile Include="Services\Harvest\HarvestVein.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Services\MiniChampionSystem\MCRestartTimer.cs" />
+    <Compile Include="Services\MiniChampionSystem\MCSliceTimer.cs" />
+    <Compile Include="Services\MiniChampionSystem\MiniChampionAltar.cs" />
+    <Compile Include="Services\MiniChampionSystem\MiniChampionSpawn.cs" />
+    <Compile Include="Services\MiniChampionSystem\MiniChampType.cs" />
     <Compile Include="Services\MondainsLegacyQuests\Gumps\QAndAGump.cs" />
     <Compile Include="Services\MondainsLegacyQuests\Q&amp;AEntry.cs" />
+    <Compile Include="Services\MondainsLegacyQuests\SimpleObjective.cs" />
     <Compile Include="Services\New Magincia\Command.cs" />
     <Compile Include="Services\New Magincia\Distillation\CraftDefinition.cs" />
     <Compile Include="Services\New Magincia\Distillation\DistillationContext.cs" />
@@ -9442,6 +9467,7 @@
     <Compile Include="Services\PointsSystems\BlackthornData.cs" />
     <Compile Include="Services\PointsSystems\CasinoData.cs" />
     <Compile Include="Services\PointsSystems\DespiseCrystals.cs" />
+    <Compile Include="Services\PointsSystems\PlayerMobileProps.cs" />
     <Compile Include="Services\PointsSystems\PointsSystem.cs" />
     <Compile Include="Services\PointsSystems\QueensLoyalty.cs" />
     <Compile Include="Services\PointsSystems\ShameCrystals.cs" />
@@ -9636,8 +9662,9 @@
     <Compile Include="Services\Revamped Dungeons\Shame Revamped\ShameCrystal.cs" />
     <Compile Include="Services\Revamped Dungeons\Shame Revamped\ShameTeleporter.cs" />
     <Compile Include="Services\Revamped Dungeons\Shame Revamped\ShameWall.cs" />
-    <Compile Include="Services\Revamped Dungeons\TheExodusEncounter\ExodusPeerless\BaseExodusPeerless.cs" />
     <Compile Include="Services\Revamped Dungeons\TheExodusEncounter\ExodusPeerless\ExodusPeerlessAltar.cs" />
+    <Compile Include="Services\Revamped Dungeons\TheExodusEncounter\Region.cs" />
+    <Compile Include="Services\Revamped Dungeons\TheExodusEncounter\VerLorRegController.cs" />
     <Compile Include="Services\Revamped Dungeons\TheExodusEncounter\Items\ExodusAlterAddon.cs" />
     <Compile Include="Services\Revamped Dungeons\TheExodusEncounter\Items\ExodusChest.cs" />
     <Compile Include="Services\Revamped Dungeons\TheExodusEncounter\Items\ExodusSacrificalDagger.cs" />
@@ -9673,6 +9700,62 @@
     <Compile Include="Services\Vendor Searching\VendorSearchGump.cs" />
     <Compile Include="Services\Vendor Searching\VendorSearchMap.cs" />
     <Compile Include="Services\VeteranRewards\DaviesLocker.cs" />
+    <Compile Include="Services\ViceVsVirtue\CityInfo.cs" />
+    <Compile Include="Services\ViceVsVirtue\GuildStats.cs" />
+    <Compile Include="Services\ViceVsVirtue\Gumps\BattleStatsGump.cs" />
+    <Compile Include="Services\ViceVsVirtue\Gumps\BattleWarningGump.cs" />
+    <Compile Include="Services\ViceVsVirtue\Gumps\ConfirmSignupGump.cs" />
+    <Compile Include="Services\ViceVsVirtue\Gumps\GuildLeaderboardGump.cs" />
+    <Compile Include="Services\ViceVsVirtue\Gumps\LeaderboardGump.cs" />
+    <Compile Include="Services\ViceVsVirtue\Gumps\RewardGump.cs" />
+    <Compile Include="Services\ViceVsVirtue\Gumps\VvVBattleStatusGump.cs" />
+    <Compile Include="Services\ViceVsVirtue\Items\Rewards\Banners\CompassionBanner.cs" />
+    <Compile Include="Services\ViceVsVirtue\Items\Rewards\Banners\CovetousBanner.cs" />
+    <Compile Include="Services\ViceVsVirtue\Items\Rewards\Banners\DeceitBanner.cs" />
+    <Compile Include="Services\ViceVsVirtue\Items\Rewards\Banners\DespiseBanner.cs" />
+    <Compile Include="Services\ViceVsVirtue\Items\Rewards\Banners\DestardBanner.cs" />
+    <Compile Include="Services\ViceVsVirtue\Items\Rewards\Banners\HonestyBanner.cs" />
+    <Compile Include="Services\ViceVsVirtue\Items\Rewards\Banners\HonorBanner.cs" />
+    <Compile Include="Services\ViceVsVirtue\Items\Rewards\Banners\HumilityBanner.cs" />
+    <Compile Include="Services\ViceVsVirtue\Items\Rewards\Banners\HythlothBanner.cs" />
+    <Compile Include="Services\ViceVsVirtue\Items\Rewards\Banners\JusticeBanner.cs" />
+    <Compile Include="Services\ViceVsVirtue\Items\Rewards\Banners\PrideBanner.cs" />
+    <Compile Include="Services\ViceVsVirtue\Items\Rewards\Banners\SacraficeBanner.cs" />
+    <Compile Include="Services\ViceVsVirtue\Items\Rewards\Banners\ShameBanner.cs" />
+    <Compile Include="Services\ViceVsVirtue\Items\Rewards\Banners\SpiritualityBanner.cs" />
+    <Compile Include="Services\ViceVsVirtue\Items\Rewards\Banners\ValorBanner.cs" />
+    <Compile Include="Services\ViceVsVirtue\Items\Rewards\Banners\WrongBanner.cs" />
+    <Compile Include="Services\ViceVsVirtue\Items\Rewards\CannonTurret.cs" />
+    <Compile Include="Services\ViceVsVirtue\Items\Rewards\EssenceOfCourage.cs" />
+    <Compile Include="Services\ViceVsVirtue\Items\Rewards\ForgedRoyalPardon.cs" />
+    <Compile Include="Services\ViceVsVirtue\Items\Rewards\ManaSpike.cs" />
+    <Compile Include="Services\ViceVsVirtue\Items\Rewards\MorphEarrings.cs" />
+    <Compile Include="Services\ViceVsVirtue\Items\Rewards\Tiles\CovetousTile.cs" />
+    <Compile Include="Services\ViceVsVirtue\Items\Rewards\Tiles\DeceitTIle.cs" />
+    <Compile Include="Services\ViceVsVirtue\Items\Rewards\Tiles\DespiseTile.cs" />
+    <Compile Include="Services\ViceVsVirtue\Items\Rewards\Tiles\DestardTile.cs" />
+    <Compile Include="Services\ViceVsVirtue\Items\Rewards\Tiles\HythlothTIle.cs" />
+    <Compile Include="Services\ViceVsVirtue\Items\Rewards\Tiles\PrideTile.cs" />
+    <Compile Include="Services\ViceVsVirtue\Items\Rewards\Tiles\ShameTile.cs" />
+    <Compile Include="Services\ViceVsVirtue\Items\Rewards\Tiles\WrongTile.cs" />
+    <Compile Include="Services\ViceVsVirtue\Items\Rewards\VvVArms.cs" />
+    <Compile Include="Services\ViceVsVirtue\Items\Rewards\VvVChests.cs" />
+    <Compile Include="Services\ViceVsVirtue\Items\Rewards\VvVEpaulettes.cs" />
+    <Compile Include="Services\ViceVsVirtue\Items\Rewards\VvVHairDye.cs" />
+    <Compile Include="Services\ViceVsVirtue\Items\Rewards\VvVHats.cs" />
+    <Compile Include="Services\ViceVsVirtue\Items\Rewards\VvVPotions.cs" />
+    <Compile Include="Services\ViceVsVirtue\Items\Rewards\VvVRobe.cs" />
+    <Compile Include="Services\ViceVsVirtue\Items\Rewards\VvVSteeds.cs" />
+    <Compile Include="Services\ViceVsVirtue\Items\Rewards\VvVTrapKit.cs" />
+    <Compile Include="Services\ViceVsVirtue\Items\Rewards\VvVTraps.cs" />
+    <Compile Include="Services\ViceVsVirtue\Items\Rewards\VvVWands.cs" />
+    <Compile Include="Services\ViceVsVirtue\Items\VvVAltar.cs" />
+    <Compile Include="Services\ViceVsVirtue\Items\VvVSigil.cs" />
+    <Compile Include="Services\ViceVsVirtue\Mobiles\SilverTrader.cs" />
+    <Compile Include="Services\ViceVsVirtue\Mobiles\VvVPriest.cs" />
+    <Compile Include="Services\ViceVsVirtue\ViceVsVirtueSystem.cs" />
+    <Compile Include="Services\ViceVsVirtue\VvVBattle.cs" />
+    <Compile Include="Services\ViceVsVirtue\VvVRewards.cs" />
     <Compile Include="Services\Virtues\Honesty.cs" />
     <Compile Include="Services\Virtues\Humility.cs" />
     <Compile Include="Services\Virtue Artifacts\VirtueArtifactsSystem.cs" />
@@ -11839,6 +11922,18 @@
     <Compile Include="Spells\Sixth\Reveal.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Spells\Skill Masteries\BardSpells\BardSpell.cs" />
+    <Compile Include="Spells\Skill Masteries\BardSpells\Despair.cs" />
+    <Compile Include="Spells\Skill Masteries\BardSpells\inspire.cs" />
+    <Compile Include="Spells\Skill Masteries\BardSpells\invigorate.cs" />
+    <Compile Include="Spells\Skill Masteries\BardSpells\Perseverance.cs" />
+    <Compile Include="Spells\Skill Masteries\BardSpells\Resilience.cs" />
+    <Compile Include="Spells\Skill Masteries\BardSpells\Tribulation.cs" />
+    <Compile Include="Spells\Skill Masteries\Core\MasteryInfo.cs" />
+    <Compile Include="Spells\Skill Masteries\Core\SelectMasteryGump.cs" />
+    <Compile Include="Spells\Skill Masteries\Core\SkillMasteryMove.cs" />
+    <Compile Include="Spells\Skill Masteries\Core\SkillMasteryPrimer.cs" />
+    <Compile Include="Spells\Skill Masteries\Core\SkillMasterySpell.cs" />
     <Compile Include="Spells\Spellweaving\ArcaneCircle.cs">
       <SubType>Code</SubType>
     </Compile>

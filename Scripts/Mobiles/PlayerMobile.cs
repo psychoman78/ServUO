@@ -42,6 +42,7 @@ using Server.Spells.Sixth;
 using Server.Spells.Spellweaving;
 using Server.Targeting;
 using System.Linq;
+using Server.Spells.SkillMasteries;
 
 using RankDefinition = Server.Guilds.RankDefinition;
 #endregion
@@ -232,8 +233,12 @@ namespace Server.Mobiles
 
 		private DateTime m_LastOnline;
 		private RankDefinition m_GuildRank;
+        private bool m_NextEnhanceSuccess;
 
-		private int m_GuildMessageHue, m_AllianceMessageHue;
+        [CommandProperty(AccessLevel.GameMaster)]
+        public bool NextEnhanceSuccess { get { return m_NextEnhanceSuccess; } set { m_NextEnhanceSuccess = value; } }
+
+        private int m_GuildMessageHue, m_AllianceMessageHue;
 
 		private List<Mobile> m_AutoStabled;
 		private List<Mobile> m_AllFollowers;
@@ -246,8 +251,27 @@ namespace Server.Mobiles
 		public double GauntletPoints { get { return m_GauntletPoints; } set { m_GauntletPoints = value; } }
 		#endregion
 
-		#region Getters & Setters
-		public List<Mobile> RecentlyReported { get { return m_RecentlyReported; } set { m_RecentlyReported = value; } }
+        #region Points System
+        private PointsSystemProps _PointsSystemProps;
+
+        [CommandProperty(AccessLevel.GameMaster)]
+        public PointsSystemProps PointSystems
+        {
+            get
+            {
+                if (_PointsSystemProps == null)
+                    _PointsSystemProps = new PointsSystemProps(this);
+
+                return _PointsSystemProps;
+            }
+            set
+            {
+            }
+        }
+        #endregion
+
+        #region Getters & Setters
+        public List<Mobile> RecentlyReported { get { return m_RecentlyReported; } set { m_RecentlyReported = value; } }
 
 		public List<Mobile> AutoStabled { get { return m_AutoStabled; } }
 
@@ -1733,7 +1757,15 @@ namespace Server.Mobiles
 
 			if (context == null)
 			{
-				return base.CheckMovement(d, out newZ);
+                bool check = base.CheckMovement(d, out newZ);
+
+                if (check && Sigil.ExistsOn(this, true) && !Server.Engines.VvV.VvVSigil.CheckMovement(this, d))
+                {
+                    SendLocalizedMessage(1155414); // You may not remove the sigil from the battle region!
+                    return false;
+                }
+
+                return check;
 			}
 
 			HouseFoundation foundation = context.Foundation;
@@ -3593,6 +3625,12 @@ namespace Server.Mobiles
 				return ApplyPoisonResult.Immune;
 			}
 
+            //Skill Masteries
+            if (SkillMasterySpell.GetSpellForParty(this, typeof(Spells.SkillMasteries.ResilienceSpell)) != null && 0.25 > Utility.RandomDouble())
+            {
+                return ApplyPoisonResult.Immune;
+            }
+
 			if (EvilOmenSpell.TryEndEffect(this))
 			{
 				poison = PoisonImpl.IncreaseLevel(poison);
@@ -5040,8 +5078,9 @@ namespace Server.Mobiles
             }
 
             BaseGuild guild = Guild;
+            bool vvv = Server.Engines.VvV.ViceVsVirtueSystem.IsVvV(this) && this.Map == Faction.Facet;
 
-            if (m_OverheadTitle != null)
+            if (!vvv && m_OverheadTitle != null)
             {
                 int loc = Utility.ToInt32(m_OverheadTitle);
 
@@ -5055,9 +5094,16 @@ namespace Server.Mobiles
                 else
                     suffix = String.Format("{0}", m_OverheadTitle);
             }
-            else if (guild != null && m_ShowGuildAbbreviation)
+            else if (vvv || (guild != null && m_ShowGuildAbbreviation))
             {
-                if (suffix.Length > 0)
+                if (vvv)
+                {
+                    if (guild != null && m_ShowGuildAbbreviation)
+                        suffix = String.Format("[{0}][VvV]", Utility.FixHtml(guild.Abbreviation));
+                    else
+                        suffix = "[VvV]";
+                }
+                else if (suffix.Length > 0)
                     suffix = String.Format("{0} [{1}]", suffix, Utility.FixHtml(guild.Abbreviation));
                 else
                     suffix = String.Format("[{0}]", Utility.FixHtml(guild.Abbreviation));

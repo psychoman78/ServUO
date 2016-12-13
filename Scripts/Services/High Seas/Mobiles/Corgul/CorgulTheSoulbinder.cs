@@ -17,7 +17,6 @@ namespace Server.Mobiles
         public override bool CanDamageBoats { get { return false; } }
 
         public override bool TaintedLifeAura { get { return true; } }
-        //public override bool BardImmune { get { return true; } }
         public override int Meat { get { return 5; } }
         public override double TreasureMapChance { get { return .25; } }
         public override int TreasureMapLevel { get { return 7; } }
@@ -33,6 +32,7 @@ namespace Server.Mobiles
         public override Type[] DecorativeList { get { return new Type[] { typeof(EnchantedBladeDeed), typeof(EnchantedVortexDeed) }; } }
 
         public override bool NoGoodies { get { return true; } }
+        public override bool CanGivePowerscrolls { get { return false; } }
 
         [Constructable]
         public CorgulTheSoulBinder()
@@ -42,7 +42,6 @@ namespace Server.Mobiles
 
         public CorgulTheSoulBinder(CorgulAltar altar) : base(null, AIType.AI_Mage, FightMode.Closest)
         {
-            //NoGoodies = true;
             m_Altar = altar;
             Name = "Corgul the Soulbinder";
             BaseSoundID = 609;
@@ -84,86 +83,43 @@ namespace Server.Mobiles
             Karma = -25000;
         }
 
-        public double UniqueChance { get { return this.Map != null && this.Map.Rules == MapRules.FeluccaRules ? .04 : .03; } }
         public double SharedChance { get { return this.Map != null && this.Map.Rules == MapRules.FeluccaRules ? .12 : .08; } }
         public double DecorativeChance { get { return this.Map != null && this.Map.Rules == MapRules.FeluccaRules ? .40 : .25; } }
+
+        public override bool OnBeforeDeath()
+        {
+            List<DamageStore> rights = GetLootingRights();
+
+            Mobile winner = null;
+
+            if (rights != null && rights.Count > 0)
+            {
+                rights.Sort();
+
+                if(rights.Count >= 5)
+                    winner = rights[Utility.Random(5)].m_Mobile;
+                else if(rights.Count > 1)
+                    winner = rights[Utility.Random(rights.Count)].m_Mobile;
+                else
+                    winner = rights[0].m_Mobile;
+            }
+
+            if(winner != null)
+                GiveArtifact(winner, CreateArtifact(UniqueList));
+
+            return base.OnBeforeDeath();
+        }
 
         public override Item GetArtifact()
         {
             double random = Utility.RandomDouble();
 
-            if (UniqueChance >= random)
-                return CreateArtifact(UniqueList);
-            else if (SharedChance >= random)
+            if (SharedChance >= random)
                 return CreateArtifact(SharedList);
             else if (DecorativeChance >= random)
                 return CreateArtifact(DecorativeList);
             return null;
         }
-
-        /*public override void GivePowerScrolls()
-        {
-            if (Map == null || (Map.Rules & MapRules.FeluccaRules) == 0)
-                return;
-
-            List<Mobile> toGive = new List<Mobile>();
-            List<DamageStore> rights = GetLootingRights();
-
-            for (int i = rights.Count - 1; i >= 0; --i)
-            {
-                DamageStore ds = rights[i];
-
-                if (ds.m_HasRight)
-                    toGive.Add(ds.m_Mobile);
-            }
-
-            if (toGive.Count == 0)
-                return;
-
-            for (int i = 0; i < toGive.Count; i++)
-            {
-                Mobile m = toGive[i];
-
-                if (!(m is PlayerMobile))
-                    continue;
-
-                bool gainedPath = false;
-
-                int pointsToGain = 800;
-
-                if (VirtueHelper.Award(m, VirtueName.Valor, pointsToGain, ref gainedPath))
-                {
-                    if (gainedPath)
-                        m.SendLocalizedMessage(1054032); // You have gained a path in Valor!
-                    else
-                        m.SendLocalizedMessage(1054030); // You have gained in Valor!
-                }
-            }
-
-            // Randomize
-            for (int i = 0; i < toGive.Count; ++i)
-            {
-                int rand = Utility.Random(toGive.Count);
-                Mobile hold = toGive[i];
-                toGive[i] = toGive[rand];
-                toGive[rand] = hold;
-            }
-
-            for (int i = 0; i < 3; ++i)
-            {
-                Mobile m = toGive[i % toGive.Count];
-
-                if (!m.Alive) 
-                    continue;
-
-                PowerScroll ps = CreateRandomPowerScroll();
-
-                if (1 >= Utility.Random(30))
-                    ps.Skill = SkillName.Fishing;
-
-                GivePowerScrollTo(m, ps);
-            }
-        }*/
 
         public void SpawnHelpers()
         {
